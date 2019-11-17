@@ -1,0 +1,2 @@
+class Razdel < ApplicationRecord
+end
