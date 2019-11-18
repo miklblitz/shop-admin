@@ -8,6 +8,12 @@ class GoodsController < ApplicationController
     render json: @goods
   end
 
+  def razdel
+    @goods = Good.where(razdel_id: params[:razdel_id])
+
+    render json: @goods
+  end
+
   # GET /goods/1
   def show
     render json: @good

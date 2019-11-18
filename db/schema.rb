@@ -10,6 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2019_11_17_234102) do
+
+  create_table "goods", force: :cascade do |t|
+    t.string "name"
+    t.string "artikul"
+    t.text "content"
+    t.integer "razdel_id"
+    t.string "rubles"
+    t.boolean "availability"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["razdel_id"], name: "index_goods_on_razdel_id"
+  end
+
+  create_table "razdels", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
 end
