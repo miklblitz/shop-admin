@@ -1,24 +1,12 @@
-# README
+How to prepare this project
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* clone the repo
+* cd repo_name
+* install Rails 5.2.3
+* rails db:create & rails db:migrate & rails db:seed
+* bundle install
+* cd client
+* npm install
+* cp .env.development_original .env.development
+* cd ..
+* (into the repo folder) foreman start

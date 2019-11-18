@@ -13,7 +13,7 @@ const Header = () =>(
     <Navbar.Brand href="/"><Logo className='logo' /></Navbar.Brand>
     <Nav.Item><Link to="/" className='option nav-link'>Лодочные моторы</Link></Nav.Item>
     <Nav.Item><Link to="boats" className='option nav-link'>Лодки ПВХ</Link></Nav.Item>
-    <Nav.Item><Link to="yachts" className='option nav-link'>Катера</Link></Nav.Item>
+    <Nav.Item><Link to="powerboats" className='option nav-link'>Катера</Link></Nav.Item>
   </Navbar>
 )
 

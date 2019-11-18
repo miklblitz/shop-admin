@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import MotorsPage from './pages/motors-page.page'
 import BoatsPage from './pages/boats-page.page'
-import YachtsPage from './pages/yachts-page.page'
+import PowerboatsPage from './pages/powerboats-page.page'
 
 import Header from './components/header/header.component';
 
@@ -18,7 +18,7 @@ function App() {
       <Header />
       <Route exact path='/' component={MotorsPage} />
       <Route path='/boats' component={BoatsPage} />
-      <Route path='/yachts' component={YachtsPage} />
+      <Route path='/powerboats' component={PowerboatsPage} />
     </Container>
   );
 }

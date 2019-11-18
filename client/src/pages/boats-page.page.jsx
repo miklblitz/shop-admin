@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-import Table from '../components/table/table.component';
+import Boats from '../components/boats/boats.component';
 import './page.style.scss';
 
 const BoatsPage = () => (
-  <div>
-    <h1>Лодки ПВХ</h1>
-    <Table category='boats' />
-  </div>
+  <Fragment>
+    <Boats />
+  </Fragment>
 )
 
 export default BoatsPage;
