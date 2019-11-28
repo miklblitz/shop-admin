@@ -3,6 +3,7 @@ import axios from 'axios';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 import ShareTable from '../share/share-table.component';
+import Myspinner from '../share/myspinner.component';
 
 class Powerboats extends React.Component {
 
@@ -88,7 +89,9 @@ class Powerboats extends React.Component {
       )
     } else {
       return (
-        <></>
+        <>
+          <Myspinner />
+        </>
       )
     }
   }

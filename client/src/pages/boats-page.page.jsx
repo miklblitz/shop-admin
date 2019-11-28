@@ -1,12 +1,93 @@
 import React, { Fragment } from 'react';
 
-import Boats from '../components/boats/boats.component';
+import { setBoat } from '../redux/boat/boat.actions';
+import { connect } from 'react-redux';
+import TableBoats from '../components/boats/table-boats.component';
+import axios from 'axios';
+
 import './page.style.scss';
 
-const BoatsPage = () => (
-  <Fragment>
-    <Boats />
-  </Fragment>
-)
+class BoatsPage extends React.Component {
 
-export default BoatsPage;
+  constructor(props) {
+    super(props);
+    console.log('CONSTRUCTOR ',props);
+  }
+
+  ajax = async() => {
+    const headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+
+    const { setBoat } = this.props;
+    await axios
+      .get(
+        process.env.REACT_APP_BACKEND + '/goods/2/razdel',
+        { headers, timeout: 10000 }
+      )
+      .then(response => {
+        console.log('RESPONSE: ', response);
+        setBoat(response.data);
+        // resolve(response.data);
+      })
+      .catch(error => {
+        console.log('ERROR: ', error.response);
+        // reject(error.response)
+      })
+      .finally(() => {
+      });
+  };
+
+  componentDidMount() {
+    this.ajax();
+  }
+  
+  render() {
+    console.log('editBoat: ',  isEmpty(this.props.editBoat));
+    return (
+      <div>
+        <h1>Лодки ПВХ</h1>
+        <Mytrigger showIndexTable={!!isEmpty(this.props.editBoat)} showEditTable={!isEmpty(this.props.editBoat)} />
+      </div>
+    )
+  }
+
+}
+function isEmpty(obj) {
+  for (var prop in obj) {
+    if (obj.hasOwnProperty(prop)) {
+      return false;
+    }
+  }
+
+  return JSON.stringify(obj) === JSON.stringify({});
+}
+
+function Mytrigger(props) {
+  const { showIndexTable, showEditTable} = props;
+  if (showIndexTable) {
+    return <TableBoatsList />;
+  }
+  if (showEditTable) {
+    return <TableBoatsEdit />;
+  }
+}
+
+function TableBoatsList(props) {
+  return <TableBoats />;
+}
+
+function TableBoatsEdit(props) {
+  return <h1>Please sign up.</h1>;
+}
+
+const mapDispatchToProps = dispatch => ({
+  setBoat: boat => dispatch(setBoat(boat))
+});
+
+const mapStateToProps = state => ({
+  editBoat: state.boat.editBoat
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(BoatsPage);
