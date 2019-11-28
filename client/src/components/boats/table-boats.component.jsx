@@ -7,6 +7,8 @@ import Table from 'react-bootstrap/Table';
 const TableBoats = ({ boats }) => {
   
   return (
+    <>
+    <h1>Лодки ПВХ</h1>
     <Table striped bordered responsive hover>
       <thead>
         <tr>
@@ -22,6 +24,7 @@ const TableBoats = ({ boats }) => {
         {boats.map((boat, index) => <TableRows key={index} {...boat} />)}
       </tbody>
     </Table>
+    </>
   )
 }
 

@@ -16,6 +16,11 @@ const boatRuducer = (state=INITIAL_STATE, action) => {
         ...state,
         editBoat: action.payload
       }
+    case 'RESET':
+      return {
+        ...state,
+        editBoat: {}
+      }
     default:
       return state;
   }

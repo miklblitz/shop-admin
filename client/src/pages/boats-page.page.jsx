@@ -3,7 +3,9 @@ import React, { Fragment } from 'react';
 import { setBoat } from '../redux/boat/boat.actions';
 import { connect } from 'react-redux';
 import TableBoats from '../components/boats/table-boats.component';
+import EditBoat from '../components/boats/edit-boat.component';
 import axios from 'axios';
+import store from '../redux/store';
 
 import './page.style.scss';
 
@@ -44,10 +46,9 @@ class BoatsPage extends React.Component {
   }
   
   render() {
-    console.log('editBoat: ',  isEmpty(this.props.editBoat));
+    console.log('editBoat: ',  this.props.editBoat);
     return (
       <div>
-        <h1>Лодки ПВХ</h1>
         <Mytrigger showIndexTable={!!isEmpty(this.props.editBoat)} showEditTable={!isEmpty(this.props.editBoat)} />
       </div>
     )
@@ -79,8 +80,10 @@ function TableBoatsList(props) {
 }
 
 function TableBoatsEdit(props) {
-  return <h1>Please sign up.</h1>;
+  return <EditBoat store={store} />;
 }
+
+
 
 const mapDispatchToProps = dispatch => ({
   setBoat: boat => dispatch(setBoat(boat))
