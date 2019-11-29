@@ -80,7 +80,7 @@ function TableBoatsList(props) {
 }
 
 function TableBoatsEdit(props) {
-  return <EditBoat store={store} />;
+  return <EditBoat />;
 }
 
 

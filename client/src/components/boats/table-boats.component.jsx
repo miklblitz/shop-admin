@@ -5,7 +5,9 @@ import TableRows from './table-rows.component';
 import Table from 'react-bootstrap/Table';
 
 const TableBoats = ({ boats }) => {
-  
+
+  console.log(boats);
+
   return (
     <>
     <h1>Лодки ПВХ</h1>
