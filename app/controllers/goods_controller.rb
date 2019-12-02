@@ -9,9 +9,9 @@ class GoodsController < ApplicationController
   end
 
   def razdel
-    @goods = Good.where(razdel_id: params[:razdel_id])
-
-    render json: @goods
+    @goods =  Good.where(razdel_id: params[:razdel_id]).paginate(page: params[:page], per_page: 10)
+    #@goods = Good.all
+    render json: @goods.all
   end
 
   # GET /goods/1

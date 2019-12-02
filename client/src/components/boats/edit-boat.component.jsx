@@ -1,21 +1,27 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
-import { reset } from '../../redux/boat/boat.actions';
 import { connect } from 'react-redux';
-import ResetBoat from '../../actions/reset-boat.action';
 import useForm from 'react-hook-form';
 import { Row, Col, Container } from 'react-bootstrap';
 import FormControl from 'react-bootstrap/FormControl';
 import Alert from 'react-bootstrap/Alert';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
+import CKEditor from 'ckeditor4-react';
 
-const EditBoat = ({editBoat}) => {
+import store from '../../redux/store';
+import { reset } from '../../redux/boat/boat.actions';
+import ResetBoat from '../../actions/reset-boat.action';
+import {editBoat as boatEdit} from '../../redux/boat/boat.actions';
 
-  // console.log(editBoat);
+const EditBoat = ({editB}) => {
+
+  // console.log(editB);
   
   //console.log(reset());
   const { register, handleSubmit, errors } = useForm();
+
+  const clone = editB;
 
   const ajax = data => new Promise((resolve, reject) => {
     const headers = {
@@ -25,7 +31,7 @@ const EditBoat = ({editBoat}) => {
 
     axios
       .put(
-        process.env.REACT_APP_BACKEND + '/goods/' + editBoat.id,
+        process.env.REACT_APP_BACKEND + '/goods/' + editB.id,
         data,
         { headers, timeout: 10000 }
       )
@@ -39,10 +45,17 @@ const EditBoat = ({editBoat}) => {
       .finally(() => {
       });
   });
-  
-  const onSubmit = async(editBoat) => {
-    console.log(editBoat);
-    await ajax(editBoat);
+
+  const intersection = (o1, o2) => {
+    return Object.keys(o1).filter({}.hasOwnProperty.bind(o2));
+  }
+
+  const onSubmit = async(editB) => {
+    const assignedObject = Object.assign(store.getState(editB).boat.editBoat, editB);
+    const objIndex = store.getState(editB).boat.boats.findIndex(obj => obj.id === clone.id);
+    store.dispatch( boatEdit(assignedObject));
+    store.getState(editB).boat.boats[objIndex] = assignedObject;
+    await ajax(assignedObject);
   }
 
   return(
@@ -58,7 +71,7 @@ const EditBoat = ({editBoat}) => {
               <Col xs={9}>
                 <FormControl
                   placeholder="Название сервиса"
-                  defaultValue={editBoat.name}
+                  defaultValue={editB.name}
                   name="name"
                   ref={register({
                     validate: value => value.length > 1
@@ -71,18 +84,24 @@ const EditBoat = ({editBoat}) => {
 
           <Container className="mt-3">
             <Row>
-              <Col>
+            <Col>
                 Описание
-                  </Col>
+            </Col>
               <Col xs={9}>
-                <FormControl
-                  placeholder="Описание"
-                  defaultValue={editBoat.content}
-                  name="content"
-                  as="textarea"
-                  ref={register({
-                    validate: value => value.length > 1
-                  })}
+                <CKEditor
+                    name="content"
+                    data={editB.content}
+                    defaultValue={editB.content}
+                    onChange={
+                        (event) => { 
+                            editB.content = event.editor.getData();
+                            store.dispatch(boatEdit(editB));
+                        }
+                    }
+                    config={{
+                    uiColor: '#cccccc',
+                    }}
+                    ref={register()}
                 />
                 {errors.name && <Alert key="service_edit_1" variant="danger">Пустое описание</Alert>}
               </Col>
@@ -100,9 +119,9 @@ const EditBoat = ({editBoat}) => {
                   ref={register}
                   className="custom-select mr-sm-2"
                   id="inlineFormCustomSelect"
-                  defaultValue={editBoat.availability}>
-                  <option value="true">Активный</option>
-                  <option value="false">Закрытый</option>
+                  defaultValue={editB.availability}>
+                  <option value={true}>В наличии</option>
+                  <option value={false}>Нет в наличии</option>
                 </select>
               </Col>
             </Row>
@@ -115,7 +134,7 @@ const EditBoat = ({editBoat}) => {
               </Col>
               <Col xs={9}>
                 <FormControl
-                  defaultValue={editBoat.artikul}
+                  defaultValue={editB.artikul}
                   name="artikul"
                   ref={register({
                     validate: value => value.length > 1
@@ -133,7 +152,8 @@ const EditBoat = ({editBoat}) => {
               </Col>
               <Col xs={9}>
                 <FormControl
-                  defaultValue={editBoat.rubles}
+                    type="number"
+                  defaultValue={editB.rubles}
                   name="rubles"
                   ref={register({
                     validate: value => value >= 0
@@ -152,11 +172,8 @@ const EditBoat = ({editBoat}) => {
 }
 
 
-const mapDispatchToProps = dispatch => ({
-    reset: () => dispatch(reset())
-});
 
 const mapStateToProps = state => ({
-  editBoat: state.boat.editBoat
+  editB: state.boat.editBoat
 });
-export default connect(mapStateToProps, mapDispatchToProps)(EditBoat);
+export default connect(mapStateToProps)(EditBoat);

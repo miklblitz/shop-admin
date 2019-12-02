@@ -4,6 +4,12 @@ const INITIAL_STATE= {
 }
 
 const boatRuducer = (state=INITIAL_STATE, action) => {
+
+  const typochecker =(payload) => {
+    payload.availability = JSON.parse(payload.availability);
+    return {...payload}
+  }
+
   console.log(action);
   switch (action.type) {
     case 'SET_BOAT':
@@ -14,7 +20,7 @@ const boatRuducer = (state=INITIAL_STATE, action) => {
     case 'EDIT_BOAT':
       return {
         ...state,
-        editBoat: action.payload
+        editBoat: typochecker(action.payload)
       }
     case 'RESET':
       return {

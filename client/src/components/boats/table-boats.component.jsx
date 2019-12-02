@@ -6,7 +6,7 @@ import Table from 'react-bootstrap/Table';
 
 const TableBoats = ({ boats }) => {
 
-  console.log(boats);
+  console.log('render ',boats);
 
   return (
     <>

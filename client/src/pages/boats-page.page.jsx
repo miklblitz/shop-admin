@@ -13,7 +13,6 @@ class BoatsPage extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log('CONSTRUCTOR ',props);
   }
 
   ajax = async() => {
@@ -46,7 +45,6 @@ class BoatsPage extends React.Component {
   }
   
   render() {
-    console.log('editBoat: ',  this.props.editBoat);
     return (
       <div>
         <Mytrigger showIndexTable={!!isEmpty(this.props.editBoat)} showEditTable={!isEmpty(this.props.editBoat)} />
@@ -68,6 +66,7 @@ function isEmpty(obj) {
 function Mytrigger(props) {
   const { showIndexTable, showEditTable} = props;
   if (showIndexTable) {
+    console.log('List');
     return <TableBoatsList />;
   }
   if (showEditTable) {
@@ -75,7 +74,7 @@ function Mytrigger(props) {
   }
 }
 
-function TableBoatsList(props) {
+function TableBoatsList() {
   return <TableBoats />;
 }
 
